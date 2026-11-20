@@ -1,1 +1,0 @@
-# fresh-rotten-fruit-quality-classifier
