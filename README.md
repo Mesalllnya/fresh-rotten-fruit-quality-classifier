@@ -47,7 +47,7 @@ Dataset yang digunakan dalam proyek ini terdiri dari citra buah segar dan busuk 
 
 | No | Nama Anggota | NIM |
 | ----- | ----- | ----- |
-| 1 | **Muhamad Ifsal Fadhilah** | *(Isi NIM)* |
+| 1 | **Muhamad Ifsal Fadhilah** | *(123240138)* |
 | 2 | **Anggota 2** *(Isi Nama)* | *(Isi NIM)* |
 | 3 | **Anggota 3** *(Isi Nama)* | *(Isi NIM)* |
 | 4 | **Anggota 4** *(Isi Nama)* | *(Isi NIM)* |
