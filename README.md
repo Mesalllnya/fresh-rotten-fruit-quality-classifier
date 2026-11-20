@@ -2,20 +2,17 @@
 
 Sistem klasifikasi kualitas dan kesegaran buah berbasis **Computer Vision** untuk membedakan buah segar (*fresh*) dan busuk (*rotten*) ke dalam **16 kelas** (8 jenis buah × 2 kondisi). Proyek ini dirancang untuk membantu petani, distributor, dan industri pengolahan buah dalam menyortir kualitas buah secara otomatis, akurat, dan efisien guna menekan kerugian ekonomi akibat pembusukan pascapanen.
 
+Aplikasi ini dilengkapi dengan antarmuka web interaktif berbasis **Streamlit** untuk mempermudah pengguna mengunggah citra buah dan mendapatkan hasil klasifikasi beserta tingkat keyakinan (*confidence score*) secara *real-time*.
+
 ## 📋 Daftar Isi
 
 * [Latar Belakang](#-latar-belakang)
-
 * [Deskripsi Dataset](#-deskripsi-dataset)
-
 * [Anggota Tim](#-anggota-tim)
-
 * [Alur Kerja Sistem (System Workflow)](#-alur-kerja-sistem-system-workflow)
-
 * [Alur Pengerjaan Proyek (Project Roadmap)](#-alur-pengerjaan-proyek-project-roadmap)
-
+* [Aplikasi Web Streamlit](#-aplikasi-web-streamlit)
 * [Struktur Direktori](#-struktur-direktori)
-
 * [Instalasi & Cara Menjalankan](#-instalasi--cara-menjalankan)
 
 ## 🎯 Latar Belakang
@@ -27,9 +24,7 @@ Sekitar sepertiga dari total buah yang diproduksi mengalami pembusukan seiring w
 Dataset yang digunakan dalam proyek ini terdiri dari citra buah segar dan busuk yang dikumpulkan dari toko buah serta lahan pertanian asli, dan telah divalidasi oleh pakar agrikultur.
 
 * **Total Citra Asli:** 3.200 citra
-
 * **Total Citra Hasil Augmentasi:** 12.335 citra (dihasilkan melalui teknik *rotation*, *flipping*, *zooming*, dan *shearing*)
-
 * **Jumlah Kelas:** 16 kelas
 
 | Jenis Buah | Kelas Segar (*Fresh*) | Kelas Busuk (*Rotten*) | 
@@ -58,7 +53,7 @@ Dataset yang digunakan dalam proyek ini terdiri dari citra buah segar dan busuk 
 Alur kerja teknis sistem pemrosesan citra hingga menghasilkan keputusan klasifikasi berjalan melalui tahapan berikut:
 
 ```
-[Input Citra Buah] 
+[Input Citra Buah (Web Streamlit)] 
        │
        ▼
 [1. Image Preprocessing] ──► Resize dimensi standar (mis. 224x224 px), konversi ruang warna (RGB/HSV), & normalisasi piksel
@@ -74,7 +69,9 @@ Alur kerja teknis sistem pemrosesan citra hingga menghasilkan keputusan klasifik
        │
        ▼
 [Output Prediksi]        ──► Label Kelas (mis. "Fresh Apple" / "Rotten Banana") + Skor Kepercayaan (Confidence Score)
-
+       │
+       ▼
+[Antarmuka Streamlit]    ──► Visualisasi hasil prediksi, confidence level, dan probabilitas kelas secara interaktif
 ```
 
 ## 🗓️ Alur Pengerjaan Proyek (Project Roadmap)
@@ -82,42 +79,44 @@ Alur kerja teknis sistem pemrosesan citra hingga menghasilkan keputusan klasifik
 Pengerjaan proyek dibagi ke dalam 6 fase terstruktur agar kolaborasi tim di GitHub berjalan rapi:
 
 1. **Fase 1: Inisiasi & Manajemen Repositori**
-
-   * Pembuatan struktur direktori proyek, setup `.gitignore`, konfigurasi *environment* (`requirements.txt`), dan pembagian *branch* kerja per anggota (`feature/eda`, `feature/preprocessing`, `feature/modeling`, `feature/evaluation`).
+   * Pembuatan struktur direktori proyek, setup `.gitignore`, konfigurasi *environment* (`requirements.txt`), dan pembagian *branch* kerja per anggota (`feature/eda`, `feature/preprocessing`, `feature/modeling`, `feature/streamlit-ui`).
 
 2. **Fase 2: Eksplorasi & Pemisahan Dataset (EDA & Splitting)**
-
    * Audit jumlah citra pada masing-masing dari 16 kelas.
-
    * Pemisahan ketat antara **3.200 citra asli** dan **12.335 citra augmentasi** sebelum *splitting* (80% Train, 10% Validation, 10% Test) untuk mencegah kebocoran data (*data leakage*) antara data latih dan data uji.
 
 3. **Fase 3: Preprocessing & Pipeline Augmentasi**
-
    * Standarisasi ukuran resolusi gambar, pembersihan citra rusak (*corrupt files*), dan penerapan *pipeline* augmentasi (*rotation, flipping, zooming, shearing*).
 
 4. **Fase 4: Pengembangan & Pelatihan Model (*Model Training*)**
-
    * Pembangunan *baseline model* dan model utama untuk klasifikasi 16 kelas.
-
    * Pemantauan grafik *training/validation accuracy* dan *loss* untuk mencegah *overfitting*.
 
 5. **Fase 5: Evaluasi & Analisis Kesalahan (*Error Analysis*)**
-
    * Pengujian model pada *unseen test set*.
-
    * Analisis *Confusion Matrix* untuk mengidentifikasi kelas buah mana yang paling sering tertukar (misalnya tingkat kemiripan visual antara buah yang mulai matang dan mulai membusuk).
 
-6. **Fase 6: Integrasi Akhir & Dokumentasi**
+6. **Fase 6: Integrasi Aplikasi Web Streamlit & Dokumentasi**
+   * Pengembangan antarmuka interaktif berbasis **Streamlit** (`app.py`) untuk mempermudah pengujian inferensi model langsung melalui web browser.
+   * *Merge* seluruh *feature branch* ke *branch* `main` melalui *Pull Request*, pengujian ulang inferensi aplikasi secara *end-to-end*, dan finalisasi dokumentasi laporan.
 
-   * *Merge* seluruh *feature branch* ke *branch* `main` melalui *Pull Request*, pengujian ulang skrip *inference* secara *end-to-end*, dan finalisasi dokumentasi laporan.
+## 🌐 Aplikasi Web Streamlit
+
+Aplikasi inferensi dibangun menggunakan [Streamlit](https://streamlit.io/) untuk memberikan antarmuka visual interaktif yang ramah pengguna:
+
+* **Unggah Citra Langsung:** Mendukung format file citra (`.jpg`, `.jpeg`, `.png`) dengan mekanisme *drag-and-drop*.
+* **Pratinjau Citra (*Image Preview*):** Menampilkan citra buah yang diunggah secara langsung di antarmuka.
+* **Hasil Klasifikasi Real-time:** Menampilkan jenis buah dan status kesegarannya (**Fresh** atau **Rotten**).
+* **Skor Kepercayaan (*Confidence Score*):** Menampilkan persentase tingkat kepastian model terhadap prediksi beserta grafik probabilitas kelas kandidat.
 
 ## 📁 Struktur Direktori
 
 ```
-multiclass-fruit-quality-vision/
+fresh-rotten-fruit-quality-classifier/
 ├── data/                   # Direktori dataset (diabaikan di git jika ukuran besar)
 │   ├── raw/                # 3.200 citra asli
 │   └── augmented/          # 12.335 citra hasil augmentasi
+├── models/                 # Model terlatih (.h5 / .pt / .pkl)
 ├── notebooks/              # Jupyter / Google Colab notebooks untuk eksperimen
 │   ├── 01_eda_dataset.ipynb
 │   ├── 02_preprocessing_augmentation.ipynb
@@ -127,34 +126,37 @@ multiclass-fruit-quality-vision/
 │   ├── model.py            # Definisi arsitektur model
 │   ├── train.py            # Skrip pelatihan model
 │   └── evaluate.py         # Skrip evaluasi dan visualisasi confusion matrix
+├── app.py                  # Aplikasi Web Interaktif Streamlit
 ├── results/                # Grafik training, confusion matrix, dan sampel prediksi
 ├── .gitignore              # Daftar file/folder yang tidak di-push ke GitHub
-├── requirements.txt        # Daftar library Python yang dibutuhkan
+├── requirements.txt        # Daftar library Python (termasuk streamlit)
 └── README.md               # Dokumentasi utama proyek
-
 ```
 
 ## 🚀 Instalasi & Cara Menjalankan
 
 1. **Clone repositori ini:**
 
-   ```
-   git clone https://github.com/<username-kamu>/multiclass-fruit-quality-vision.git
-   cd multiclass-fruit-quality-vision
-   
+   ```bash
+   git clone https://github.com/Mesalllnya/fresh-rotten-fruit-quality-classifier.git
+   cd fresh-rotten-fruit-quality-classifier
    ```
 
 2. **Install dependensi yang diperlukan:**
 
-   ```
+   ```bash
    pip install -r requirements.txt
-   
    ```
 
-3. **Jalankan pipeline pelatihan atau evaluasi:**
+3. **Jalankan Aplikasi Web Streamlit:**
 
+   ```bash
+   streamlit run app.py
    ```
+
+4. **(Opsional) Menjalankan pipeline pelatihan atau evaluasi:**
+
+   ```bash
    python src/train.py
    python src/evaluate.py
-   
    ```
