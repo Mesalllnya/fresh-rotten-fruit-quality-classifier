@@ -47,11 +47,11 @@ Dataset yang digunakan dalam proyek ini terdiri dari citra buah segar dan busuk 
 
 | No | Nama Anggota | NIM |
 | ----- | ----- | ----- |
-| 1 | **Muhamad Ifsal Fadhilah** | *(123240138)* |
-| 2 | **Anggota 2** *(Isi Nama)* | *(Isi NIM)* |
-| 3 | **Anggota 3** *(Isi Nama)* | *(Isi NIM)* |
-| 4 | **Anggota 4** *(Isi Nama)* | *(Isi NIM)* |
-| 5 | **Anggota 5** *(Isi Nama)* | *(Isi NIM)* |
+| 1 | **Muhamad Ifsal Fadhilah** | *123240138* |
+| 2 | **Muhammad Affan Musyafa'**  | *123240155* |
+| 3 | **Firraz Muhammad Raihan Daffa**  | *123240170* |
+| 4 | **Mufid Dhamarjati Kusuma**  | *123240171* |
+| 5 | **Reno Miftahudin**  | *123240248* |
 
 ## ⚙️ Alur Kerja Sistem (System Workflow)
 
